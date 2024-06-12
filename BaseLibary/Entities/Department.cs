@@ -1,8 +1,7 @@
 ﻿
-
 namespace BaseLibrary.Entities
 {
-    public class GeneralDepartament : BaseEntity
+    public class Department : BaseEntity
     {
     }
 }
