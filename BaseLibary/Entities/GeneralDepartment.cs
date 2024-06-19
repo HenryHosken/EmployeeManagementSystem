@@ -2,7 +2,7 @@
 
 namespace BaseLibrary.Entities
 {
-    public class GeneralDepartament : BaseEntity
+    public class GeneralDepartment : BaseEntity
     {
     }
 }

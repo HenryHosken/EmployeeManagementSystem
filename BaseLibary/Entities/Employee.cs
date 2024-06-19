@@ -15,7 +15,7 @@ namespace BaseLibrary.Entities
         public string? Other {  get; set; }
 
         // Relationship : many to one
-        public GeneralDepartament? GeneralDepartament { get; set; }
+        public GeneralDepartment? GeneralDepartment { get; set; }
         public int GeneralDepartamentId { get; set; }
         public Department? Department { get; set; }
         public Branch? Branch { get; set; }
