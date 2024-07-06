@@ -9,10 +9,10 @@ using ServerLibrary.Data;
 
 #nullable disable
 
-namespace ServerLibrary.Data.migrations
+namespace ServerLibrary.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240619005258_First")]
+    [Migration("20240620004054_First")]
     partial class First
     {
         /// <inheritdoc />

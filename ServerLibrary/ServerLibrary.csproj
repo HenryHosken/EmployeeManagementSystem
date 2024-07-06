@@ -19,8 +19,7 @@
 
 </ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Repositories\Contracts\" />
-	  <Folder Include="Repositories\Implementations\" />
+	  <Folder Include="Data\migrations\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\BaseLibary\BaseLibrary.csproj" />
