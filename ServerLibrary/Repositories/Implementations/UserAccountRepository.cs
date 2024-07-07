@@ -1,10 +1,12 @@
 ﻿using BaseLibrary.DTOs;
 using BaseLibrary.Entities;
 using BaseLibrary.Responses;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ServerLibrary.Data;
 using ServerLibrary.Helpers;
 using ServerLibrary.Repositories.Contracts;
+using Constants = ServerLibrary.Helpers.Constants;
 
 
 namespace ServerLibrary.Repositories.Implementations
@@ -14,8 +16,8 @@ namespace ServerLibrary.Repositories.Implementations
         public async Task<GeneralResponse> CreateAsync(Register user)
         {
             if (user is null) return new GeneralResponse(false, "Model is empty");
-            
-            var checkUser = await FindUserByEmail(user.Email);
+
+            var checkUser = await FindUserByEmail(user.Email!);
             if (checkUser != null) return new GeneralResponse(false, "User registered already");
 
             //Save user
@@ -26,11 +28,42 @@ namespace ServerLibrary.Repositories.Implementations
                 Password = BCrypt.Net.BCrypt.HashPassword(user.Password)
 
             });
+
+            //check, create and assingn role
+            var checkAdminRole = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Name!.Equals(Constants.Admin));
+            if (checkAdminRole is null)
+            {
+                var createAdminRole = await AddToDataBase(new SystemRole() { Name = Constants.Admin });
+                return new GeneralResponse(true, "Account created!");
+            }
+
+            var checkUserRole = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Name!.Equals(Constants.User));
+            SystemRole response = new();
+            if (checkUserRole is null)
+            {
+                response = await AddToDataBase(new SystemRole() { Name = Constants.Admin });
+                await AddToDataBase(new UserRole() { RoleId = response.Id, UserId = applicationUser.Id });
+            }
+            else 
+            {
+                await AddToDataBase(new UserRole() { RoleId = checkUserRole.Id, UserId = applicationUser.Id });
+            }
+            return new GeneralResponse(true, "Account created");
         }
 
         public Task<LoginResponse> IUserAccount.SingInAsync(Login user)
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<ApplicationUser> FindUserByEmail(string email)
+            => await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Email!.ToLower()!.Equals(email!.ToLower()));
+
+        private async Task<T> AddToDataBase<T>(T model)
+        {
+            var result = appDbContext.Add(model!);
+            await appDbContext.SaveChangesAsync();
+            return (T)result.Entity;
         }
     }
 }
