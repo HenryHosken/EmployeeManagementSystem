@@ -11,7 +11,7 @@ using Constants = ServerLibrary.Helpers.Constants;
 
 namespace ServerLibrary.Repositories.Implementations
 {
-    internal class UserAccountRepository(IOptions<JwtSection> cofing, AppDbContext appDbContext) : IUserAccount
+    public class UserAccountRepository(IOptions<JwtSection> cofing, AppDbContext appDbContext) : IUserAccount
     {
         public async Task<GeneralResponse> CreateAsync(Register user)
         {
@@ -50,12 +50,10 @@ namespace ServerLibrary.Repositories.Implementations
             }
             return new GeneralResponse(true, "Account created");
         }
-
-        public Task<LoginResponse> IUserAccount.SingInAsync(Login user)
+        public Task<LoginResponse> SingInAsync(Login user)
         {
             throw new NotImplementedException();
         }
-
         private async Task<ApplicationUser> FindUserByEmail(string email)
             => await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Email!.ToLower()!.Equals(email!.ToLower()));
 
@@ -65,5 +63,6 @@ namespace ServerLibrary.Repositories.Implementations
             await appDbContext.SaveChangesAsync();
             return (T)result.Entity;
         }
+        
     }
 }
