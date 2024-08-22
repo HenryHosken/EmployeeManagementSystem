@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseLibrary", "BaseLibary\BaseLibrary.csproj", "{E64C2CBD-84D7-4B60-8661-EC4B18FBDB92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientLibrary", "ClientLibrary\ClientLibrary.csproj", "{629895CF-61F4-49F3-8485-68AF462C2A6F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D98FCF6-6F5E-4ED9-9170-E34F39B12A77} = {7D98FCF6-6F5E-4ED9-9170-E34F39B12A77}
+		{E64C2CBD-84D7-4B60-8661-EC4B18FBDB92} = {E64C2CBD-84D7-4B60-8661-EC4B18FBDB92}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerLibrary", "ServerLibrary\ServerLibrary.csproj", "{7D98FCF6-6F5E-4ED9-9170-E34F39B12A77}"
 EndProject
