@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using Client;
+using Microsoft.AspNetCore.Components.Authorization;
 using ClientLibrary.Helpers;
 using ClientLibrary.Services.Contracts;
 using ClientLibrary.Services.Implementations;
@@ -18,6 +19,7 @@ builder.Services.AddHttpClient("SystemApiClient", client =>
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5139") });
 builder.Services.AddAuthorizationCore();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<GetHttpClient>();
 builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<CustomAuthenticationStateProvider, CustomAuthenticationStateProvider>();
